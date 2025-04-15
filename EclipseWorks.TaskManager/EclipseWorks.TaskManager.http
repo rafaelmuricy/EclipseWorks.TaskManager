@@ -1,0 +1,6 @@
+@EclipseWorks.TaskManager_HostAddress = http://localhost:5147
+
+GET {{EclipseWorks.TaskManager_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
