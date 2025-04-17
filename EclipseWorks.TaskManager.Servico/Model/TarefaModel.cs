@@ -2,6 +2,7 @@
 {
     public class TarefaModel
     {
+        [IgnorarValidacao]
         public int Id { get; set; }
         public int IdProjeto { get; set; }
         public int IdUsuario { get; set; }
@@ -9,9 +10,11 @@
         public string Descricao { get; set; } = string.Empty;
         public DateTime DataVencimento { get; set; }
 
-        public PrioridadeTarefa Prioridade { get; set; }
-        public StatusTarefa Status { get; set; }
+        public PrioridadeTarefa? Prioridade { get; set; }
+        public StatusTarefa? Status { get; set; }
 
+        [IgnorarValidacao]
+        public List<HistoricoModel> Historico { get; set; } = new();
         public enum PrioridadeTarefa
         {
             Baixa,
@@ -24,12 +27,5 @@
             EmAndamento,
             Concluida
         }
-    }
-
-    public class TarefaComentario
-    {
-        public int IdTarefa { get; set; }
-        public int IdUsuario { get; set; }
-        public string Comentario { get; set; } = string.Empty;
     }
 }
