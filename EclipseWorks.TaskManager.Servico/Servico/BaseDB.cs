@@ -20,6 +20,8 @@ public class BaseDB : IDisposable
         ConnectionString = connectionString;
 
         connection = new SqliteConnection(ConnectionString);
+        
+        
         connection.Open();
     }
 
@@ -40,13 +42,14 @@ public class BaseDB : IDisposable
     {
         using (var command = new SqliteCommand(query, connection))
         {
-            List<SqliteParameter> listaParametros = new();
+            var listaParametros = new DynamicParameters();
 
             if (parametros != null)
             {
                 foreach (var param in parametros)
                 {
-                    listaParametros.Add(new SqliteParameter(param.Key, param.Value));
+                    listaParametros.Add(param.Key, param.Value);
+                    
                 }
             }
             
@@ -60,11 +63,11 @@ public class BaseDB : IDisposable
     {
         using (var command = new SqliteCommand(query, connection))
         {
-            List<SqliteParameter> listaParametros = new();
+            DynamicParameters listaParametros = new();
 
             foreach (var param in parametros)
             {
-                command.Parameters.AddWithValue(param.Key, param.Value);
+                listaParametros.Add(param.Key, param.Value);
             }
 
             connection.Execute(query, listaParametros);
@@ -75,17 +78,17 @@ public class BaseDB : IDisposable
     {
         using (var command = new SqliteCommand(query, connection))
         {
-            List<SqliteParameter> listaParametros = new();
+            DynamicParameters listaParametros = new();
 
             foreach (var param in parametros)
             {
-                command.Parameters.AddWithValue(param.Key, param.Value);
+                listaParametros.Add(param.Key, param.Value);
             }
 
             var retorno = connection.ExecuteScalar(query, listaParametros);
 
             if ( retorno != null)
-                return (int)retorno;
+                return Convert.ToInt32(retorno);
             else
                 return null;
         }
@@ -148,7 +151,7 @@ public class BaseDB : IDisposable
                     IdHistorico INTEGER NOT NULL,
                     Campo TEXT,
                     ValorAntigo TEXT,
-                    ValorNovo TEXT,
+                    ValorNovo TEXT
                 );
             ", connection);
             command.ExecuteNonQuery();

@@ -31,6 +31,62 @@ internal class HistoricoServico
         return retorno;
     }
 
+    internal void InserirHistorico(TarefaModel tarefaAnterior, TarefaAlterarModel tarefaAtual)
+    {
+        string query = @"INSERT INTO Historico (IdTarefa, IdUsuario, Comentario, DataModificacao) 
+                                    VALUES (@IdTarefa, @IdUsuario, @Comentario, @DataModificacao) returning Id";
+        var parametros = new Dictionary<string, object>
+        {
+            { "@IdTarefa", tarefaAnterior.Id },
+            { "@IdUsuario", tarefaAtual.IdUsuario },
+            { "@Comentario", tarefaAtual.Comentario },
+            { "@DataModificacao", DateTime.Now }
+        };
+
+        var idHistorico = baseDB.ExecuteScalar(query, parametros);
+
+        var alteracoes = ListarAlteracoes(tarefaAnterior, tarefaAtual);
+
+        foreach (var alteracao in alteracoes)
+        {
+            string queryAlteracao = @"INSERT INTO Alteracoes (IdHistorico, Campo, ValorAntigo, ValorNovo)
+                                                VALUES (@IdHistorico, @Campo, @ValorAntigo, @ValorNovo)";
+            var parametrosAlteracao = new Dictionary<string, object>
+            {
+                { "@IdHistorico", idHistorico! },
+                { "@Campo", alteracao.Campo },
+                { "@ValorAntigo", alteracao.ValorAntigo },
+                { "@ValorNovo", alteracao.ValorNovo }
+            };
+
+            baseDB.ExecuteQuery(queryAlteracao, parametrosAlteracao);
+        }
+    }
+    private List<AlteracoesModel> ListarAlteracoes(TarefaModel tarefaAnterior, TarefaAlterarModel tarefaAtual)
+    {
+        List<AlteracoesModel> alteracoes = new();
+        if (tarefaAnterior.Titulo != tarefaAtual.Titulo)
+        {
+            alteracoes.Add(new AlteracoesModel { Campo = "Título", ValorAntigo = tarefaAnterior.Titulo, ValorNovo = tarefaAtual.Titulo });
+        }
+        if (tarefaAnterior.Descricao != tarefaAtual.Descricao)
+        {
+            alteracoes.Add(new AlteracoesModel { Campo = "Descrição", ValorAntigo = tarefaAnterior.Descricao, ValorNovo = tarefaAtual.Descricao });
+        }
+        if (tarefaAnterior.DataVencimento != tarefaAtual.DataVencimento)
+        {
+            alteracoes.Add(new AlteracoesModel { Campo = "Data de Vencimento", ValorAntigo = tarefaAnterior.DataVencimento.ToString(), ValorNovo = tarefaAtual.DataVencimento.ToString() });
+        }
+        if (tarefaAnterior.Prioridade != tarefaAtual.Prioridade)
+        {
+            alteracoes.Add(new AlteracoesModel { Campo = "Prioridade", ValorAntigo = tarefaAnterior.Prioridade.ToString()!, ValorNovo = tarefaAtual.Prioridade!.ToString()! });
+        }
+        if (tarefaAnterior.Status != tarefaAtual.Status)
+        {
+            alteracoes.Add(new AlteracoesModel { Campo = "Status", ValorAntigo = tarefaAnterior.Status.ToString()!, ValorNovo = tarefaAtual.Status.ToString()! });
+        }
+        return alteracoes;
+    }
     public void Remover(int idTarefa)
     {
         var historicos = Listar(idTarefa);

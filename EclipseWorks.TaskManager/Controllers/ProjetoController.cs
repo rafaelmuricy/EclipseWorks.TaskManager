@@ -3,6 +3,9 @@ using EclipseWorks.TaskManager.Servico.Servico;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EclipseWorks.TaskManager.Controllers;
+
+[ApiController]
+[Route("[controller]")]
 public class ProjetoController : ControllerBase
 {
     BaseDB baseDB;
@@ -12,8 +15,9 @@ public class ProjetoController : ControllerBase
         this.baseDB = baseDB;
     }
 
+    [HttpGet]
     [HttpGet("{idUsuario}")]
-    public List<ProjetoModel> Listar(int idUsuario)
+    public List<ProjetoModel> Listar(int? idUsuario)
     {
         var projetoServico = new ProjetoServico(baseDB);
         return projetoServico.Listar(idUsuario);

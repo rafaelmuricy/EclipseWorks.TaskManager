@@ -3,6 +3,9 @@ using EclipseWorks.TaskManager.Servico.Servico;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EclipseWorks.TaskManager.Controllers;
+
+[ApiController]
+[Route("[controller]")]
 public class TarefaController : ControllerBase
 {
     BaseDB baseDB;
@@ -23,7 +26,7 @@ public class TarefaController : ControllerBase
     }
 
     [HttpPost]
-    public Result<TarefaModel> Criar([FromBody] TarefaModel tarefa)
+    public Result<TarefaModel> Criar([FromBody] TarefaInserirModel tarefa)
     {
         var tarefaServico = new TarefaServico(baseDB);
         var retorno = tarefaServico.Criar(tarefa);
@@ -39,10 +42,10 @@ public class TarefaController : ControllerBase
     }
 
     [HttpPut]
-    public Result<TarefaModel> Alterar([FromBody] TarefaModel tarefa, [FromBody] string Comentario)
+    public Result<TarefaModel> Alterar([FromBody] TarefaAlterarModel tarefa)
     {
         var tarefaServico = new TarefaServico(baseDB);
-        var retorno = tarefaServico.Alterar(tarefa, Comentario);
+        var retorno = tarefaServico.Alterar(tarefa);
         if (retorno.ErrorMessage.IsNullOrEmpty())
         {
             Response.StatusCode = 200; // OK
