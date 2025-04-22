@@ -4,6 +4,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 USER $APP_UID
 WORKDIR /app
+ENV ConnectionString="Data Source=taskmanager.db; Mode=ReadWriteCreate"
 EXPOSE 8080
 EXPOSE 8081
 
@@ -27,4 +28,5 @@ RUN dotnet publish "./EclipseWorks.TaskManager.csproj" -c $BUILD_CONFIGURATION -
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ConnectionString="Data Source=taskmanager.db; Mode=ReadWriteCreate"
 ENTRYPOINT ["dotnet", "EclipseWorks.TaskManager.dll"]
