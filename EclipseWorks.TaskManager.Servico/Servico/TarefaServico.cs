@@ -117,6 +117,24 @@ public class TarefaServico
 
         return ObterTarefa(tarefa.Id)!;
     }
+
+
+    public List<RelatorioModel> TarefasConcluidasPorUsuario()
+    {
+        string query = @"SELECT IdUsuario, COUNT(id) as TarefasConcluidas
+                        FROM tarefas
+                        WHERE status = @Status
+                        AND DataVencimento >= @Data
+                        GROUP BY IdUsuario";
+        var parametros = new Dictionary<string, object>
+        {
+            { "@Status", TarefaModel.StatusTarefa.Concluida },
+            { "@Data", DateTime.Now.AddDays(-30) }
+        };
+        var retorno = baseDB.ExecuteQuery<RelatorioModel>(query, parametros);
+        return retorno;
+    }
+
     public void Remover(int id)
     {
         var historicoServico = new HistoricoServico(baseDB);

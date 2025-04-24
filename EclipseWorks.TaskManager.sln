@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseWorks.TaskManager", "EclipseWorks.TaskManager\EclipseWorks.TaskManager.csproj", "{081B7378-8629-43C3-8444-FCA2C5163BC3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseWorks.TaskManager.Servico", "EclipseWorks.TaskManager.Servico\EclipseWorks.TaskManager.Servico.csproj", "{B4D748E5-6E94-4A73-809A-656F2575A5EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseWorks.TaskManager.Test", "EclipseWorks.TaskManager.Test\EclipseWorks.TaskManager.Test.csproj", "{C34428D6-B1E5-4BAF-8371-760E481FE998}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B4D748E5-6E94-4A73-809A-656F2575A5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4D748E5-6E94-4A73-809A-656F2575A5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4D748E5-6E94-4A73-809A-656F2575A5EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C34428D6-B1E5-4BAF-8371-760E481FE998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C34428D6-B1E5-4BAF-8371-760E481FE998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C34428D6-B1E5-4BAF-8371-760E481FE998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C34428D6-B1E5-4BAF-8371-760E481FE998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
