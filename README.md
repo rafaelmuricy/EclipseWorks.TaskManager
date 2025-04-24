@@ -2,6 +2,20 @@
 
 Apenas aperte play no visual studio. O projeto está configurado com a variavel de ambiente "ConnectionString" em todas as formas, inclusive no container docker e também no Dockerfile.
 
+Para rodar no VSCode ou usando o terminal, utilize os seguintes comandos:
+
+Windows:
+```ps1
+PM> set ConnectionString="Data Source=taskmanager.db; Mode=ReadWriteCreate"
+PM> dotnet run
+```
+
+Linux/Mac:
+```sh
+$ export ConnectionString="Data Source=taskmanager.db; Mode=ReadWriteCreate"
+$ dotnet run
+```
+
 ## Fase 2: Refinamento
 
 Uma melhoria que seria crucial para o projeto seria a possibilidade de upload de imagens para as tarefas, e também para comentários.
